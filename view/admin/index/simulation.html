@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <title>模拟黑暗森林法则</title>
+</head>
+<body>
+<button id="btn" onclick="start()">click</button>
+<button onclick="stop()">停止</button>
+<button onclick="jian()" class="jian">减速</button>
+<button onclick="jia()" class="jia">加速</button>
+<div class="box">123</div>
+</body>
+<script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
+</html>
+<script>
+    var set1;
+    var I=1000;
+    function jia(){
+        I-=100;
+        $('.jia').text('加速:'+I)
+        clearInterval(set1);
+        if(I>300){
+            set1= setInterval(fn, I);
+        }else{
+            I=1000;
+            $('.jia').text('加速:'+I)
+            set1 = setInterval(fn, I);
+        }
+    }
+    function jian(){
+        I+=100;
+        $('.jian').text('减速'+I)
+        clearInterval(set1);
+        if(I<3000){
+            set1 = setInterval(fn, I);
+        }else{
+            I=1000;
+            $('.jian').text('减速'+I)
+            set1 = setInterval(fn, I);
+        }
+    }
+    function start(){
+        set1 = setInterval(fn, I);
+    }
+function fn(){
+    $.get('simulation',{'num':123},function (res) {
+        console.log(res)
+        $('.box').prepend('<div>'+res+'</div>')
+    });
+}
+function stop(){
+    clearInterval(set1);
+}
+</script>
