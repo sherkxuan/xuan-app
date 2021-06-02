@@ -7,6 +7,8 @@ use app\api\common\model\BaseModel;
 use app\api\validate\LoginValidate;
 use app\BaseController;
 use think\db\exception\{DataNotFoundException,DbException,ModelNotFoundException};
+use thans\jwt\facade\JWTAuth;
+use think\App;
 use think\facade\Request;
 use think\response\Json;
 
@@ -49,9 +51,10 @@ class Login extends BaseController
         //后期处理登录设备
         $find->last_login_ip = Request::ip();
         $find->save();
-
         //获取token
-        $token = createToken($find->user->id);
+        $token = JWTAuth::builder(['uid' => $find->user->id,'ip'=>Request::ip()]);
+
+//        $token = createToken($find->user->id);
         return $this->success([
             'userinfo'  =>  $find->user,
             'token'     =>  $token
