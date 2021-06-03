@@ -38,6 +38,10 @@ class CheckToken extends JWTAuth
         } catch (JWTException $e) {
             throw new Exception($e->getMessage(),201);
         }
+        $ip = ($this->auth->auth())['ip']->getValue();
+        if($ip!=$request->ip()){
+            throw new Exception('非法地址访问',206);
+        }
         $request->uid = ($this->auth->auth())['uid']->getValue();
         return $next($request);
     }

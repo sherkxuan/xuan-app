@@ -12,7 +12,7 @@ class LabelValidate extends BaseValidate
      * @var array
      */
     protected $rule = [
-        'name'  =>  'require|length:2,10',
+        'name'  =>  'require|length:2,10|chsAlpha',
     ];
 
     /**

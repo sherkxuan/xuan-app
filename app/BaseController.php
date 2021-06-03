@@ -7,7 +7,6 @@ use app\api\common\lib\ResponseJson;
 use think\App;
 use think\exception\ValidateException;
 use think\Validate;
-use thans\jwt\facade\JWTAuth;
 
 /**
  * 控制器基础类
@@ -24,19 +23,19 @@ abstract class BaseController
      * Request实例
      * @var \think\Request
      */
-    protected $request;
+    protected \think\Request $request;
 
     /**
      * 应用实例
-     * @var \think\App
+     * @var App
      */
-    protected $app;
+    protected App $app;
 
     /**
      * 是否批量验证
      * @var bool
      */
-    protected $batchValidate = false;
+    protected bool $batchValidate = false;
 
     /**
      * 控制器中间件
@@ -53,7 +52,6 @@ abstract class BaseController
     {
         $this->app     = $app;
         $this->request = $this->app->request;
-        //$this->uid = (JWTAuth::auth())['uid']->getValue();
 
         // 控制器初始化
         $this->initialize();
