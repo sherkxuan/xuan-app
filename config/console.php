@@ -5,6 +5,7 @@
 return [
     // 指令定义
     'commands' => [
-        'AddUser'=>\app\command\AddUser::class
+        'AddUser'=>\app\command\AddUser::class,
+        'AddLabel'=>\app\command\AddLabel::class
     ],
 ];

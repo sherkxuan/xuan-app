@@ -12,7 +12,7 @@ class LabelValidate extends BaseValidate
      * @var array
      */
     protected $rule = [
-        'name'  =>  'require|length:2,10|chsAlpha',
+        'name'  =>  'require|checkName',
     ];
 
     /**
@@ -26,4 +26,25 @@ class LabelValidate extends BaseValidate
     protected $scene = [
         'create'    =>  ['name']
     ];
+    // 自定义验证规则
+    protected function checkName($value)
+    {
+        if(!is_array($value)){
+            $num = mb_strlen($value);
+            if($num<2 || $num>10){
+                return '标签长度必须是2-10个字';
+            }else{
+                return true;
+            }
+        }
+        array_map(function ($item){
+            $num = mb_strlen($item);
+            if($num<2 || $num>10){
+                throw new VerifyException('单个标签长度必须是2-10个字',204);
+            }else{
+                return $item;
+            }
+        },$value);
+        return true;
+    }
 }

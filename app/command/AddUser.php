@@ -14,8 +14,6 @@ class AddUser extends Command
 {
     protected function configure()
     {
-        //执行
-        $this->addUser();
         // 指令配置
         $this->setName('adduser')
             ->setDescription('Add a virtual user');
@@ -23,8 +21,10 @@ class AddUser extends Command
 
     protected function execute(Input $input, Output $output)
     {
+        //执行
+        $this->addUser();
         // 指令输出
-        $output->writeln('hello');
+        $output->writeln('随机生成用户成功,'.date('Y-m-d H:i:s',time()));
     }
 
     /**

@@ -11,7 +11,7 @@ trait ResponseJson
 {
         //一般以配置文件( config/status.php )或者类的常量来定义错误码, 统一管理便于维护
     /**
-     * @param array|string $data
+     * @param mixed $data
      * @param string $msg
      * @return Json
      */
@@ -19,6 +19,12 @@ trait ResponseJson
     {
         //始终不输出用户uid
         if(isset($data['user_id']))unset($data['user_id']);
+        $data = array_map(function($item){
+            if(isset($item['user_id'])){
+                unset($item['user_id']);
+            }
+            return $item;
+        },is_array($data)?$data:$data->toArray());
         $status = 200;
         return $this->restful($status,$msg?:'success',$data);
     }

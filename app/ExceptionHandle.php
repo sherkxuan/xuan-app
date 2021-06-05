@@ -3,6 +3,9 @@ namespace app;
 
 use app\api\common\lib\ResponseJson;
 use think\db\exception\{DataNotFoundException,DbException,ModelNotFoundException};
+use thans\jwt\exception\JWTException;
+use thans\jwt\exception\TokenBlacklistGracePeriodException;
+use thans\jwt\exception\TokenExpiredException;
 use think\exception\Handle;
 use think\exception\HttpException;
 use think\exception\HttpResponseException;
@@ -54,7 +57,6 @@ class ExceptionHandle extends Handle
     public function render($request, Throwable $e): Response
     {
         // 添加验证自定义异常处理机制
-        //api添加上$request->isAjax
         if($request->isAjax()){
             if ($e instanceof VerifyException) {
                 return $this->error($e->getStatus(),$e->getError());
